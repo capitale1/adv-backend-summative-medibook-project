@@ -1,0 +1,41 @@
+// MediBook schema (3NF): paste into https://dbdiagram.io and export as schema-diagram.png
+
+Table patients {
+  id int_unsigned [pk, increment]
+  full_name varchar(100) [not null]
+  email "varchar(150) UNIQUE, CHECK(email format)" [not null, unique]
+  phone varchar(20) [not null]
+  created_at "datetime DEFAULT NOW" [not null]
+}
+
+Table doctors {
+  id int_unsigned [pk, increment]
+  full_name varchar(100) [not null]
+  specialty varchar(100) [not null]
+  consultation_fee "decimal(10,2) CHECK(>= 0)" [not null]
+  room varchar(10) [not null]
+  created_at "datetime DEFAULT NOW" [not null]
+}
+
+Table appointments {
+  id int_unsigned [pk, increment]
+  patient_id "int_unsigned FK ON DELETE RESTRICT" [not null, ref: > patients.id]
+  doctor_id "int_unsigned FK ON DELETE RESTRICT" [not null, ref: > doctors.id]
+  slot_start "datetime CHECK(min 00/30, 09:00-16:30)" [not null]
+  amount_paid "decimal(10,2) CHECK(>= 0)" [not null]
+  status "enum('BOOKED','CANCELLED') DEFAULT 'BOOKED'" [not null]
+  booked_at "datetime DEFAULT NOW" [not null]
+  cancelled_at "datetime NULL, CHECK(set only if CANCELLED)"
+  refund_amount "decimal(10,2) NULL, CHECK(0..amount_paid, set only if CANCELLED)"
+  active_slot "datetime GENERATED (slot_start if BOOKED else NULL), UNIQUE(doctor_id, active_slot) = no double-booking"
+
+  indexes {
+    (doctor_id, active_slot) [unique, name: 'uq_doctor_active_slot']
+  }
+
+  Note: '''
+  UNIQUE(doctor_id, active_slot): a doctor can never hold two BOOKED appointments at the same date/time.
+  Cancelled rows have active_slot = NULL, so the slot becomes rebookable while the record is kept for refund history.
+  App-enforced (cannot be a CHECK): future-only bookings, max 12 appointments per doctor per day.
+  '''
+}
