@@ -30,4 +30,17 @@ class UnprocessableError extends AppError {
   }
 }
 
-module.exports = { AppError, ValidationError, NotFoundError, ConflictError, UnprocessableError };
+class ServiceUnavailableError extends AppError {
+  constructor(message) {
+    super(503, message);
+  }
+}
+
+module.exports = {
+  AppError,
+  ValidationError,
+  NotFoundError,
+  ConflictError,
+  UnprocessableError,
+  ServiceUnavailableError,
+};
