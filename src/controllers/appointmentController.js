@@ -1,18 +1,9 @@
 const AppointmentService = require('../services/appointmentService');
-const { validateBookingRequest, toBookingData } = require('../validators/appointmentValidator');
-const { getSlotRuleViolations } = require('../validators/slotValidator');
+const { parseSlotRequest } = require('./requestParsers');
 const { requireId } = require('../validators/common');
-const { ValidationError, UnprocessableError } = require('../utils/errors');
 
 async function bookAppointment(req, res) {
-  const errors = validateBookingRequest(req.body);
-  if (errors.length > 0) throw new ValidationError(errors);
-
-  const booking = toBookingData(req.body);
-  const violations = getSlotRuleViolations(booking.slotStart, new Date());
-  if (violations.length > 0) throw new UnprocessableError('Slot violates booking rules', violations);
-
-  const appointment = await AppointmentService.bookAppointment(booking);
+  const appointment = await AppointmentService.bookAppointment(parseSlotRequest(req.body));
   res.status(201).location(`/api/appointments/${appointment.id}`).json(appointment);
 }
 

@@ -1,14 +1,14 @@
 const { parseId } = require('./common');
 const { parseLocalDateTime } = require('../utils/dateTime');
 
-function validateBookingRequest(body) {
+function validateSlotRequest(body) {
   if (!body || typeof body !== 'object') return ['Request body must be a JSON object'];
 
   const errors = [];
-  if (parseId(body.patient_id) === null || typeof body.patient_id !== 'number') {
+  if (typeof body.patient_id !== 'number' || parseId(body.patient_id) === null) {
     errors.push('patient_id must be a positive integer');
   }
-  if (parseId(body.doctor_id) === null || typeof body.doctor_id !== 'number') {
+  if (typeof body.doctor_id !== 'number' || parseId(body.doctor_id) === null) {
     errors.push('doctor_id must be a positive integer');
   }
   if (parseLocalDateTime(body.slot_start) === null) {
@@ -17,7 +17,7 @@ function validateBookingRequest(body) {
   return errors;
 }
 
-function toBookingData(body) {
+function toSlotRequest(body) {
   return {
     patientId: body.patient_id,
     doctorId: body.doctor_id,
@@ -25,4 +25,4 @@ function toBookingData(body) {
   };
 }
 
-module.exports = { validateBookingRequest, toBookingData };
+module.exports = { validateSlotRequest, toSlotRequest };
