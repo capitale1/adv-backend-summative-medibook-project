@@ -1,0 +1,18 @@
+{
+  "htmlLang": "fr",
+  "intlLocale": "fr-FR",
+  "languageName": "Français",
+  "title": "Évaluation du cours",
+  "instructions": "Veuillez répondre à chaque question en quelques phrases. Vos commentaires sincères aident à améliorer ce cours.",
+  "dateLabel": "Date du jour",
+  "submit": "Envoyer mes commentaires",
+  "thankYou": "Merci ! Vos commentaires ont bien été reçus.",
+  "backLink": "Retour au formulaire",
+  "questions": [
+    "Quel sujet de ce cours avez-vous trouvé le plus difficile, et pourquoi ?",
+    "Décrivez un concept que vous n’avez compris qu’après les travaux pratiques. Qu’est-ce qui vous a permis de le comprendre ?",
+    "Comment votre approche de la conception de bases de données ou d’API a-t-elle évolué depuis le début du trimestre ?",
+    "Qu’amélioreriez-vous dans la manière dont ce cours a été enseigné ou évalué ?",
+    "Comment comptez-vous appliquer à l’avenir ce que vous avez appris dans ce cours ?"
+  ]
+}
