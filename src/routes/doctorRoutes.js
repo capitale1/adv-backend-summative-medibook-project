@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const controller = require('../controllers/doctorController');
+const { getDoctorStatistics } = require('../controllers/reportController');
 
 const router = Router();
 
@@ -11,5 +12,7 @@ router.route('/:id')
   .get(controller.getDoctor)
   .put(controller.updateDoctor)
   .delete(controller.deleteDoctor);
+
+router.get('/:id/statistics', getDoctorStatistics);
 
 module.exports = router;
