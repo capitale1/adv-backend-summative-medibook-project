@@ -300,3 +300,6 @@ npm test
 - **Slot validator:** valid slots, the first (09:00) and last (16:30) slots, 17:00, 08:30, 09:15, a past slot, a slot starting exactly now, and several rules broken at once.
 - **Date parsing:** malformed and impossible dates (`2026-02-30`, `25:00`, `tomorrow`, wrong types) are rejected.
 - **Localization:** French loads for `lang=fr`; unsupported, empty or repeated `lang` values fall back to English; both locales have exactly 5 questions; dates are formatted per locale.
+
+Video demo
+https://youtu.be/N3nPB_apY-A
